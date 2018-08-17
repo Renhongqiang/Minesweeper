@@ -1,0 +1,19 @@
+
+#mineBox {
+    border: 10px groove #C0C0C0;
+    width: 200px;
+    height: 200px;
+    margin: 50px auto;
+}
+#mine {
+    position: relative;
+    background: #000;
+}
+#mine tr td {
+    background: #C0C0C0;
+    border: groove 3px #fff;
+}
+#mine tr td:hover {
+    background: rgb(156, 156, 156); 
+    /* border: solid 3px #808080; */
+}
