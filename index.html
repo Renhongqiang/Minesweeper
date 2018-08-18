@@ -9,11 +9,11 @@
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body oncontextmenu="doNothing()">
 
   <div class="container">
     <div id="mineBox">
-        <table id="mine" width='200px' height='200px' border=2 cellspacing='0'>
+        <table id="mine" width='200px' height='200px' border=0 cellSpacing=''>
             <tr>
                 <td></td>
                 <td></td>
@@ -46,5 +46,12 @@
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/mine.js"></script>
+<!-- 屏蔽右击 -->
+<script type="text/javascript">
+    function doNothing(){
+    window.event.returnValue=false;
+    return false;
+    }
+</script>
 </body>
 </html>

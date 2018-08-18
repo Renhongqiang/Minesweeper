@@ -12,8 +12,10 @@
 #mine tr td {
     background: #C0C0C0;
     border: groove 3px #fff;
+    width: 20px;
 }
 #mine tr td:hover {
     background: rgb(156, 156, 156); 
-    /* border: solid 3px #808080; */
+    width: 20px;
+    height: 20px;
 }
