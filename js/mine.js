@@ -1,30 +1,15 @@
   
-var line = 16; //行数
-var list = 30; //列数
+var line = 6; //行数
+var list = 6; //列数
 var minesNum = parseInt(list * line * 0.16); //雷数
 var mineWidth = 20;//方块大小
 var mineBox = document.getElementById('mineBox'); //table外div容器
 
 var minePosition = new Array(minesNum);//雷位置信息，坐标
-for(var i =-0; i < minesNum; i++){
-    minePosition[i] = {
-        x:0,
-        y:0
-    }
-}
 
 //初始化雷区信息
 var mines = new Array(line);
-for(var i = 0; i < line; i++){
-    mines[i] = new Array(list);
-    for(var j = 0; j < list; j++){
-        mines[i][j] = {
-            ifMine:0,     //0 表示此方块没雷 1表示有
-            aroundMinesNum:0,  //值为周围8个方块雷数
-            checkFlag:0   //0：未点击 1：点击清除 2：插旗 3：标记
-        }
-    }
-}
+
 
 window.onload =  function doThis() {
 
@@ -37,41 +22,96 @@ window.onload =  function doThis() {
             var row = $(this).parent().index(); // 行位置
             var col = $(this).index(); // 列位置
             switch(e.which){
+                //左击
                 case 1:{
                     check(row,col);
                     break;
                 }
+                //右击
                 case 3:{
-                    var mineTable = document.getElementById('mine');  //table
-                    if(mines[row][col].checkFlag == 0){
-                        mines[row][col].checkFlag = 2;
-                        mineTable.rows[row].cells[col].innerText = "F";
-                        mineTable.rows[row].cells[col].style.cssText='width:20px;height:20px;font-size:10px;text-align:center;font-weight:bold;';
-                    }else if(mines[row][col].checkFlag == 2){
-                        mines[row][col].checkFlag = 3;
-                        mineTable.rows[row].cells[col].innerText = "?";
-                    }else if(mines[row][col].checkFlag == 3){
-                        mines[row][col].checkFlag = 0;
-                        mineTable.rows[row].cells[col].innerText = null;
-                    }
+                    printNum(row,col);//显示数字
                     break;
                }
             }
+            checkWin(); //检测是否赢了
             // alert("当前位置：第" + row + "行，第" + col + "列" + e.which )
         });
      });
 }
 
+//显示雷数
+function printNum(row,col){
+    var mineTable = document.getElementById('mine');  //table
+    if(mines[row][col].checkFlag == 0){
+        mines[row][col].checkFlag = 2;
+        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/flag1.png')";
+        mineTable.rows[row].cells[col].style.backgroundSize='19px 19px';
+    }else if(mines[row][col].checkFlag == 2){
+        mines[row][col].checkFlag = 3;
+        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/flag2.png')";
+        mineTable.rows[row].cells[col].style.backgroundSize='19px 19px';
+    }else if(mines[row][col].checkFlag == 3){
+        mines[row][col].checkFlag = 0;
+        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/')";
+    }
+}
+
+//检测赢
+function checkWin(){
+    var n = 0;
+    for(var i = 0; i < line; i++){
+        for(var j = 0; j < list; j++){
+            if(mines[i][j].ifMine == 1 && mines[i][j].checkFlag == 2){
+                n++;
+            }else if(mines[i][j] != 1 && mines[i][j].checkFlag !=1){
+                n--;
+            }
+        }
+    }
+    console.log(n,minesNum);
+    if(n == minesNum){
+        var r = confirm("你赢了！是否重新开始？");
+        console.log(r);
+        if(r){
+            //重置
+        }
+    }
+}
+
+
 //方块点击递归检测
 //递归检查周围八个方块
 function check(r, c) {
     var mineTable = document.getElementById('mine'); //table
+    //踩到雷 
     if (mines[r][c].ifMine) {
-        // console.log("lose");
-    } else if (mines[r][c].aroundMinesNum > 0 && mines[r][c].checkFlag == 0) {
+        mines[r][c].checkFlag = 1;
+        mineTable.rows[r].cells[c].style.backgroundImage = "url('images/redMine.png')";
+        mineTable.rows[r].cells[c].style.backgroundSize='16px 16px';
+        //遍历显示未清除的块
+        for(var i = 0; i < line; i++){
+            for(var j = 0; j < list; j++){
+                if(mines[i][j].checkFlag != 1){
+                    if(mines[i][j].ifMine){
+                        mineTable.rows[i].cells[j].style.backgroundImage = "url('images/blackMine.png')";
+                        mineTable.rows[i].cells[j].style.backgroundSize='16px 16px';
+                    } else if(mines[i][j].aroundMinesNum != 0){
+                        printNum(i,j);
+                    } else {
+                        console.log(i,j);
+                        mineTable.rows[i].cells[j].style.backgroundColor = "#9C9C9C";
+                    }
+                }
+            }
+        }
+    } 
+    //踩到数字块
+    else if (mines[r][c].aroundMinesNum > 0 && mines[r][c].checkFlag == 0) {
         mines[r][c].checkFlag = 1;
         printNum(r, c);
-    } else if (mines[r][c].checkFlag == 0) {
+    }
+    //猜到空白块
+    else if (mines[r][c].checkFlag == 0) {
         mines[r][c].checkFlag = 1;
         mineTable.rows[r].cells[c].style.backgroundColor = "#9C9C9C";
         if (r - 1 >= 0 && c - 1 >= 0) {
@@ -105,16 +145,22 @@ function check(r, c) {
 //显示r行c列方块的数字
 function printNum(r,c){
     var mineTable = document.getElementById('mine'); //table
-    mineTable.rows[r].cells[c].style.cssText='width:20px;height:20px;font-size:10px;text-align:center;background:#9C9C9C;font-weight:bold;';
-        mineTable.rows[r].cells[c].innerText = mines[r][c].aroundMinesNum;
-        if(mines[r][c].aroundMinesNum == 1)
-            mineTable.rows[r].cells[c].style.color = "#0000FF";
-        if(mines[r][c].aroundMinesNum == 2)
-            mineTable.rows[r].cells[c].style.color = "#0E850E";
-        if(mines[r][c].aroundMinesNum == 3)
-            mineTable.rows[r].cells[c].style.color = "#FF0000";
-        if(mines[r][c].aroundMinesNum >= 4)
-            mineTable.rows[r].cells[c].style.color = "#000080";
+        if(mines[r][c].aroundMinesNum == 1){
+            mineTable.rows[r].cells[c].style.backgroundImage = "url('images/num_1.png')";
+            mineTable.rows[r].cells[c].style.backgroundSize='16px 16px';
+        }
+        if(mines[r][c].aroundMinesNum == 2){
+            mineTable.rows[r].cells[c].style.backgroundImage = "url('images/num_2.png')";
+            mineTable.rows[r].cells[c].style.backgroundSize='16px 16px';
+        }
+        if(mines[r][c].aroundMinesNum == 3){
+            mineTable.rows[r].cells[c].style.backgroundImage = "url('images/num_3.png')";
+            mineTable.rows[r].cells[c].style.backgroundSize='16px 16px';
+        }
+        if(mines[r][c].aroundMinesNum >= 4){
+            mineTable.rows[r].cells[c].style.backgroundImage = "url('images/num_4.png')";
+            mineTable.rows[r].cells[c].style.backgroundSize='16px 16px';
+        }
 }
 
 //创建table
@@ -137,6 +183,17 @@ function creatTable(){
 
 //产生雷,初始化数组信息
 function initMines(){
+    for(var i = 0; i < line; i++){
+        mines[i] = new Array(list);
+        for(var j = 0; j < list; j++){
+            mines[i][j] = {
+                ifMine:0,     //0 表示此方块没雷 1表示有
+                aroundMinesNum:0,  //值为周围8个方块雷数
+                checkFlag:0   //0：未点击 1：点击清除 2：插旗 3：标记
+            }
+        }
+    }
+
     creatPosition();
     for(var i = 0; i < minesNum; i++){
         var x = minePosition[i].x;
@@ -147,6 +204,13 @@ function initMines(){
 }
 //产生随机坐标
 function creatPosition() {
+    for(var i =-0; i < minesNum; i++){
+        minePosition[i] = {
+            x:0,
+            y:0
+        }
+    }
+
     var tempPosition = {
         x:0,
         y:0
