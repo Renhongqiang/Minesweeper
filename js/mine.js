@@ -29,7 +29,19 @@ window.onload =  function doThis() {
                 }
                 //右击
                 case 3:{
-                    printNum(row,col);//显示数字
+                    var mineTable = document.getElementById('mine');  //table
+                    if(mines[row][col].checkFlag == 0){
+                        mines[row][col].checkFlag = 2;
+                        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/flag1.png')";
+                        mineTable.rows[row].cells[col].style.backgroundSize='19px 19px';
+                    }else if(mines[row][col].checkFlag == 2){
+                        mines[row][col].checkFlag = 3;
+                        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/flag2.png')";
+                        mineTable.rows[row].cells[col].style.backgroundSize='19px 19px';
+                    }else if(mines[row][col].checkFlag == 3){
+                        mines[row][col].checkFlag = 0;
+                        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/')";
+                    }
                     break;
                }
             }
@@ -39,22 +51,6 @@ window.onload =  function doThis() {
      });
 }
 
-//显示雷数
-function printNum(row,col){
-    var mineTable = document.getElementById('mine');  //table
-    if(mines[row][col].checkFlag == 0){
-        mines[row][col].checkFlag = 2;
-        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/flag1.png')";
-        mineTable.rows[row].cells[col].style.backgroundSize='19px 19px';
-    }else if(mines[row][col].checkFlag == 2){
-        mines[row][col].checkFlag = 3;
-        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/flag2.png')";
-        mineTable.rows[row].cells[col].style.backgroundSize='19px 19px';
-    }else if(mines[row][col].checkFlag == 3){
-        mines[row][col].checkFlag = 0;
-        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/')";
-    }
-}
 
 //检测赢
 function checkWin(){
