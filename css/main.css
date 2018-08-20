@@ -6,19 +6,24 @@
 #topBox {
     border-top-color: rgb(192, 192, 192);
     border-top-style: groove;
-    border-top-width: 10px;
+    border-top-width: 8px;
     border-right-color: rgb(255, 255, 255);
     border-right-style: groove;
-    border-right-width: 10px;
+    border-right-width: 8px;
     border-bottom-color: rgb(255, 255, 255);
     border-bottom-style: groove;
-    border-bottom-width: 10px;
+    border-bottom-width: 8px;
     border-left-color: rgb(192, 192, 192);
     border-left-style: groove;
-    border-left-width: 10px;
-    height: 73px;
+    border-left-width: 8px;
+    height: 65px;
     position: absolute;
-    margin: 10px 12px;
+    margin: 13px 12px;
+}
+#topBoxBg {
+    background: #C0C0C0;
+    margin: -4px -4px;
+    height: 57px;
 }
 #mineBox {
     border-top-color: rgb(192, 192, 192);
@@ -34,7 +39,7 @@
     border-left-style: groove;
     border-left-width: 10px;
     position: absolute;
-    margin: 95px 12px;
+    margin: 88px 12px;
 }
 #mine {
     position: relative;

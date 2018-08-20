@@ -198,8 +198,11 @@ function creatTable() {
     mineBox.style.width = mineWidth * list + 10 + "px";
     mineBox.style.height = mineWidth * line + 10 + "px";
     document.getElementById('bgBox').style.width = mineWidth * list + 35 + "px";
-    document.getElementById('bgBox').style.height = mineWidth * line + 120 + "px";
+    document.getElementById('bgBox').style.height = mineWidth * line + 110 + "px";
+    
     document.getElementById('topBox').style.width = mineWidth * list + 10 + "px";
+    document.getElementById('topBoxBg').style.width = mineWidth * list + 2 + "px";
+    
 }
 
 //产生雷,初始化数组信息
