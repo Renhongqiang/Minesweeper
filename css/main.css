@@ -25,6 +25,47 @@
     margin: -4px -4px;
     height: 57px;
 }
+#faceBtn {
+    background-image: url("../images/goodFace.png");
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    outline:none;
+    position: absolute;
+    margin: 13px 280px;
+}
+#numLeft {
+    width: 51px;
+    height: 30px;
+    position: absolute;
+    float: left;
+    margin: 13px 10px; 
+}
+#numL1,#numL2,#numL3{
+    width: 17px;
+    height: 30px;
+    background-image: url("../images/num/d0.bmp");
+    background-size: 17px 30px;
+    float: left;
+}
+#numRight {
+    width: 51px;
+    height: 30px;
+    /* position: absolute; */
+    float: right;
+    margin-top: 13px;
+    margin-right: 10px; 
+}
+#numR1,#numR2,#numR3{
+    width: 17px;
+    height: 30px;
+    background-image: url("../images/num/d0.bmp");
+    background-size: 17px 30px;
+    float: left;
+}
+
+
 #mineBox {
     border-top-color: rgb(192, 192, 192);
     border-top-style: groove;

@@ -2,15 +2,55 @@
 
 var line = 16; //行数
 var list = 30; //列数
-var minesNum = parseInt(list * line * 0.16); //雷数
+// var minesNum = 1; //雷数
+var minesNum = 99; //雷数
+// var minesNum = parseInt(list * line * 0.16); //雷数
 var mineWidth = 20;//方块大小
 var mineBox = document.getElementById('mineBox'); //table外div容器
 var minePosition = new Array(minesNum);//雷位置信息，坐标
 var mines = new Array(line); //二维数组，表示雷区地图信息
+var gameFlag = 1; //1表示笑脸游戏进行 0表示哭脸游戏结束
+var clickFlag = 0; //0表示未点击 1表示点击 2表示暂停 用于控制计时器的开始结束
+var timeNum = 0; //时间 秒
 
 
 window.onload = function doThis() {
     initGame();
+    topNumPrint("L",minesNum); //左上角显示雷数
+
+        setInterval(function () {
+            if (clickFlag == 1) { //开始
+                timeNum++;
+                topNumPrint("R", timeNum);
+            }
+            if(clickFlag == 0) {
+                timeNum = 0;
+                topNumPrint("R",timeNum);
+            }
+            if(clickFlag == 2) { //暂停 保留数字
+                topNumPrint("R",timeNum);
+            }
+        }, 1000);
+}
+
+//计时函数
+
+
+//笑脸按钮
+function gameStart(){
+        clickFlag = 0;
+        initGame();
+        document.getElementById("faceBtn").style.backgroundImage = "url('images/goodFace.png')";
+}
+
+//显示雷数 左上角显示数字 参数f为左数字/右时间的判断
+function topNumPrint(f,num){
+     var n3 = num % 10; 
+     var n2 = parseInt(num % 100 / 10);  
+     var n1 = parseInt(num % 1000 / 100);
+     document.getElementById("num" + f + "1").style.backgroundImage = "url('images/num/d" + n1 + ".bmp')";
+     document.getElementById("num" + f + "2").style.backgroundImage = "url('images/num/d" + n2 + ".bmp')";
+     document.getElementById("num" + f + "3").style.backgroundImage = "url('images/num/d" + n3 + ".bmp')";
 }
 
 //初始化函数
@@ -23,6 +63,9 @@ function initGame() {
         $("table td").mousedown(function (e) {   //在div="id1"区域点击
             var row = $(this).parent().index(); // 行位置
             var col = $(this).index(); // 列位置
+            if(clickFlag != 2){
+                clickFlag =1;
+            }
             switch (e.which) {
                 //左击
                 case 1: {
@@ -67,11 +110,13 @@ function checkWin() {
     }
     console.log(n, minesNum);
     if (n == minesNum) {
-        var r = confirm("你赢了！是否重新开始？");
-        console.log(r);
-        if (r) {
-            initGame();
-        }
+        // var r = confirm("你赢了！是否重新开始？");
+        // console.log(r);
+        // if (r) {
+        //     initGame();
+        // }
+        alert("你赢了！");
+        document.getElementById("faceBtn").style.backgroundImage = "url('images/winFace.png')";
     }
 }
 
@@ -81,6 +126,9 @@ function check(r, c) {
     var mineTable = document.getElementById('mine'); //table
     //踩到雷 
     if (mines[r][c].ifMine) {
+        clickFlag = 2;
+        gameFlag = 0;
+        document.getElementById("faceBtn").style.backgroundImage = "url('images/badFace.png')";
         mines[r][c].checkFlag = 1;
         mineTable.rows[r].cells[c].style.backgroundImage = "url('images/redMine.png')";
         mineTable.rows[r].cells[c].style.backgroundSize = '20px 20px';
@@ -202,6 +250,7 @@ function creatTable() {
     
     document.getElementById('topBox').style.width = mineWidth * list + 10 + "px";
     document.getElementById('topBoxBg').style.width = mineWidth * list + 2 + "px";
+    document.getElementById('faceBtn').style.marginLeft = mineWidth * list * 0.5 - 15 + "px";
     
 }
 
