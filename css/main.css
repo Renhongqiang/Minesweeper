@@ -1,8 +1,128 @@
+#boderBox{
+    background: rgb(221, 234, 250);
+    -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px;
+    -moz-box-shadow:2px 2px 20px #333333, -2px -2px 20px #333333; -webkit-box-shadow:2px 2px 20px #333333, -2px -2px 20px #333333; box-shadow:2px 2px 20px #333333, -2px -2px 20px #333333;
+    margin: 65px auto;
+}
+#boderBox span{
+    font-size: 15px;
+    position: absolute;
+    margin-top: 5px;
+}
+/* win窗口右上角控制按钮 */
+#imgIcon{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+    width: 130px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid #ccc;
+    border-top: none;
+    margin-right: 5px;
+    text-align: center;
+    margin-top: 1px;
+    height: 25px;
+}
+#imgIcon li{
+    float: left;
+}
+#winMin{
+    display: inline;
+    background-image: url("../images/window_min.bmp");
+    background-size: 37px 25px;
+    margin: 0;
+    padding: 0;
+    width: 37px;
+    height: 23px;
+    border-bottom-left-radius: 5px;
+}
+#winMax{
+    display: inline;
+    background-image: url("../images/window_max.bmp");
+    background-size: 37px 25px;
+    margin: 0;
+    padding: 0;
+    width: 37px;
+    height: 23px;
+}
+#winClose{
+    display: inline;
+    background-image: url("../images/window_close.bmp");
+    background-size: 56px 25px;
+    margin: 0;
+    padding: 0;
+    width: 54px;
+    height: 23px;
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+#winClose:hover{
+    -moz-box-shadow:2px 2px 20px #FF0000, -2px -2px 20px #FF0000; -webkit-box-shadow:2px 2px 20px #FF0000, -2px -2px 20px #FF0000; box-shadow:2px 2px 20px #FF0000, -2px -2px 20px #FF0000;
+}
+#winMin:hover{
+    -moz-box-shadow:2px 2px 20px #56C1FF, -2px -2px 20px #56c1ff; -webkit-box-shadow:2px 2px 20px #56C1FF, -2px -2px 20px #56c1ff; box-shadow:2px 2px 20px #56C1FF, -2px -2px 20px #56c1ff;
+}
+#winMax:hover{
+    -moz-box-shadow:2px 2px 20px #56C1FF, -2px -2px 20px #56c1ff; -webkit-box-shadow:2px 2px 20px #56C1FF, -2px -2px 20px #56c1ff; box-shadow:2px 2px 20px #56C1FF, -2px -2px 20px #56c1ff;
+}
+
+/* 游戏 + 帮助 菜单按钮 */
+#menuTwo {
+    border: 1px solid #CCCCCC;
+    background-image: url("../images/menu_bg.bmp");
+    height: 30px;
+    position: absolute;
+    margin: 8px 12px;
+    background-size: contain;
+}
+#spG{
+    cursor:pointer;
+    float: left;
+    margin-left: 5px;
+}
+#spH{
+    cursor:pointer;
+    float: left;
+    margin-left: 70px;
+}
+/* 弹出菜单 */
+.win_menu{
+    display: none;
+    padding-left:0px;
+    list-style: none;
+    width: 200px;
+    position: absolute;
+    margin: 30px 0px;
+    z-index: 99999!important;
+    background: #F2F2F2;
+}
+.win_menu li{
+    cursor:pointer;
+    height: 25px;
+    padding-left: 25px;
+}
+.win_menu li:hover{
+    background: #91C9F7;
+}
+.win_menu li span{
+    margin-top: 0;
+    width: 25px;
+    height: 25px;
+    margin-left: -25px;
+}
+#winHelp {
+    margin-left: 70px;
+}
 
 #bgBox {
     background: #C0C0C0;
-    margin: 50px auto;
+    border: 1px solid rgb(124, 124, 124);
+    position: absolute;
+    margin: 40px 12px;
 }
+
 #topBox {
     border-top-color: rgb(192, 192, 192);
     border-top-style: groove;
@@ -20,44 +140,33 @@
     position: absolute;
     margin: 13px 12px;
 }
+
 #topBoxBg {
     background: #C0C0C0;
     margin: -4px -4px;
     height: 57px;
 }
+
 #faceBtn {
     background-image: url("../images/goodFace.png");
     background-size: 30px 30px;
     width: 30px;
     height: 30px;
     border: none;
-    outline:none;
+    outline: none;
     position: absolute;
     margin: 13px 280px;
 }
+
 #numLeft {
     width: 51px;
     height: 30px;
     position: absolute;
     float: left;
-    margin: 13px 10px; 
+    margin: 13px 10px;
 }
-#numL1,#numL2,#numL3{
-    width: 17px;
-    height: 30px;
-    background-image: url("../images/num/d0.bmp");
-    background-size: 17px 30px;
-    float: left;
-}
-#numRight {
-    width: 51px;
-    height: 30px;
-    /* position: absolute; */
-    float: right;
-    margin-top: 13px;
-    margin-right: 10px; 
-}
-#numR1,#numR2,#numR3{
+
+#numL1,#numL2,#numL3 {
     width: 17px;
     height: 30px;
     background-image: url("../images/num/d0.bmp");
@@ -65,6 +174,24 @@
     float: left;
 }
 
+#numRight {
+    width: 51px;
+    height: 30px;
+    /* position: absolute; */
+    float: right;
+    margin-top: 13px;
+    margin-right: 10px;
+}
+
+#numR1,
+#numR2,
+#numR3 {
+    width: 17px;
+    height: 30px;
+    background-image: url("../images/num/d0.bmp");
+    background-size: 17px 30px;
+    float: left;
+}
 
 #mineBox {
     border-top-color: rgb(192, 192, 192);
@@ -82,17 +209,20 @@
     position: absolute;
     margin: 88px 12px;
 }
+
 #mine {
     position: relative;
     margin-top: -5px;
     margin-left: -5px;
 }
+
 #mine tr td {
     border: #808080 1px solid;
     background-image: url("../images/bg11.png");
     background-size: 20px 20px;
     width: 20px;
 }
+
 #mine tr td:hover {
     background-image: url("../images/bg22.png");
     background-size: 20px 20px;

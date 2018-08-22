@@ -1,74 +1,107 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MineSweeper</title>
-<!-- Bootstrap -->
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/main.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MineSweeper</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
+
 <body oncontextmenu="doNothing()">
 
-  <div class="container">
-    <div id="bgBox">
-        <div id="topBox">
-            <div id="topBoxBg">
-                <div id="numLeft">
-                    <div id="numL1"></div>
-                    <div id="numL2"></div>
-                    <div id="numL3"></div>
-                </div>
-                <input id="faceBtn" type="button" onclick="gameStart()">
-                <div id="numRight">
+    <div class="container" onselectstart="return false">
+        <div id="boderBox"> 
+            <img src="./images/mine.ico" style="height: 22px;margin: 4px 4px;" alt="">    
+            <span>扫雷</span> 
+            <ul id="imgIcon">
+                <li id="winMin"></li>
+                <li id="winMax"></li>
+                <li id="winClose"></li>
+            </ul>
+            <div id="menuTwo">
+                <span id="spG" onclick="menuGame()">游戏(G)</span>
+                <ul class="win_menu" id="winGame">
+                    <li style="border-bottom: #DADADA 1px solid;"> <span></span>  开局(N)</li>
+                    <li onclick="gameLevel(1)"> <span></span>  初级(B)</li>
+                    <li onclick="gameLevel(2)"> <span></span>  中级(I)</li>
+                    <li onclick="gameLevel(3)"> <span></span>  高级(E)</li>
+                    <li style="border-bottom: #DADADA 1px solid;"> <span></span>  自定义(C)...</li>
+                    <li> <span></span>  标记(?)(M)</li>
+                    <li> <span></span>  颜色(L)</li>
+                    <li style="border-bottom: #DADADA 1px solid;"> <span></span>  声音(S)...</li>
+                    <li style="border-bottom: #DADADA 1px solid;"> <span></span>  退出(X)...</li>
+                </ul>
+                <span id="spH" onclick="menuHelp()">帮助(H)</span>
+                <ul class="win_menu" id="winHelp">
+                        <li> <span></span>  目录(C)</li>
+                        <li> <span></span>  查找帮助主题(S)...</li>
+                        <li style="border-bottom: #DADADA 1px solid;"> <span></span>  使用帮助(H)</li>
+                        <li> <span></span>  关于扫雷(A)...</li>
+                </ul>
+            </div>       
+            <div id="bgBox">
+            <div id="topBox">
+                <div id="topBoxBg">
+                    <div id="numLeft">
+                        <div id="numL1"></div>
+                        <div id="numL2"></div>
+                        <div id="numL3"></div>
+                    </div>
+                    <input id="faceBtn" type="button" onclick="gameStart()">
+                    <div id="numRight">
                         <div id="numR1"></div>
                         <div id="numR2"></div>
                         <div id="numR3"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="mineBox">
-        <table id="mine" width='200px' height='200px' border=0 cellSpacing='0'>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
+            <div id="mineBox">
+                <table id="mine" width='200px' height='200px' border=0 cellSpacing='0'>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            </div>
         </div>
     </div>
-  </div>
 
-<script src="js/jquery-1.11.3.min.js"></script> 
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/mine.js"></script>
-<!-- 屏蔽右击 -->
-<script type="text/javascript">
-    function doNothing(){
-    window.event.returnValue=false;
-    return false;
-    }
-</script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/mine.js"></script>
+    <!-- 屏蔽右击 -->
+    <script type="text/javascript">
+        function doNothing() {
+            window.event.returnValue = false;
+            return false;
+        }
+    </script>
 </body>
+
 </html>

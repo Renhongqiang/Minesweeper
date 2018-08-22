@@ -1,56 +1,73 @@
 /*扫雷游戏*/
 
-var line = 16; //行数
-var list = 30; //列数
+var line = 9; //行数
+var list = 9; //列数
 // var minesNum = 1; //雷数
-var minesNum = 99; //雷数
+var minesNum = 10; //雷数
 // var minesNum = parseInt(list * line * 0.16); //雷数
-var mineWidth = 20;//方块大小
+var mineWidth = 20; //方块大小
 var mineBox = document.getElementById('mineBox'); //table外div容器
-var minePosition = new Array(minesNum);//雷位置信息，坐标
+var minePosition = new Array(minesNum); //雷位置信息，坐标
 var mines = new Array(line); //二维数组，表示雷区地图信息
 var gameFlag = 1; //1表示笑脸游戏进行 0表示哭脸游戏结束
 var clickFlag = 0; //0表示未点击 1表示点击 2表示暂停 用于控制计时器的开始结束
 var timeNum = 0; //时间 秒
 
+//游戏难度
+function gameLevel(f){
+    if(f == "1"){
+        line = 9;
+        list = 9;
+        minesNum = 10;
+    }
+    if(f == "2"){
+        line = 16;
+        list = 16;
+        minesNum = 40;
+    }
+    if(f == "3"){
+        line = 16;
+        list = 30;
+        minesNum = 99;
+    }
+    gameStart();
+}
 
 window.onload = function doThis() {
     initGame();
-    topNumPrint("L",minesNum); //左上角显示雷数
+    topNumPrint("L", minesNum); //左上角显示雷数
 
-        setInterval(function () {
-            if (clickFlag == 1) { //开始
-                timeNum++;
-                topNumPrint("R", timeNum);
-            }
-            if(clickFlag == 0) {
-                timeNum = 0;
-                topNumPrint("R",timeNum);
-            }
-            if(clickFlag == 2) { //暂停 保留数字
-                topNumPrint("R",timeNum);
-            }
-        }, 1000);
+    setInterval(function () {
+        if (clickFlag == 1) { //开始
+            timeNum++;
+            topNumPrint("R", timeNum);
+        }
+        if (clickFlag == 0) {
+            timeNum = 0;
+            topNumPrint("R", timeNum);
+        }
+        if (clickFlag == 2) { //暂停 保留数字
+            topNumPrint("R", timeNum);
+        }
+    }, 1000);
 }
 
-//计时函数
-
-
 //笑脸按钮
-function gameStart(){
-        clickFlag = 0;
-        initGame();
-        document.getElementById("faceBtn").style.backgroundImage = "url('images/goodFace.png')";
+function gameStart() {
+    clickFlag = 0;
+    initGame();
+    topNumPrint("L", minesNum); //左上角显示雷数
+    document.getElementById("faceBtn").style.backgroundImage = "url('images/goodFace.png')";
 }
 
 //显示雷数 左上角显示数字 参数f为左数字/右时间的判断
-function topNumPrint(f,num){
-     var n3 = num % 10; 
-     var n2 = parseInt(num % 100 / 10);  
-     var n1 = parseInt(num % 1000 / 100);
-     document.getElementById("num" + f + "1").style.backgroundImage = "url('images/num/d" + n1 + ".bmp')";
-     document.getElementById("num" + f + "2").style.backgroundImage = "url('images/num/d" + n2 + ".bmp')";
-     document.getElementById("num" + f + "3").style.backgroundImage = "url('images/num/d" + n3 + ".bmp')";
+function topNumPrint(f, num) {
+    var n3 = num % 10;
+    var n2 = parseInt(num % 100 / 10);
+    var n1 = parseInt(num % 1000 / 100);
+    document.getElementById("num" + f + "1").style.backgroundImage = "url('images/num/d" + n1 + ".bmp')";
+    document.getElementById("num" + f + "2").style.backgroundImage = "url('images/num/d" + n2 + ".bmp')";
+    document.getElementById("num" + f + "3").style.backgroundImage = "url('images/num/d" + n3 + ".bmp')";
 }
 
 //初始化函数
@@ -60,35 +77,37 @@ function initGame() {
     makeInfo();
 
     $(function () {
-        $("table td").mousedown(function (e) {   //在div="id1"区域点击
+        $("table td").mousedown(function (e) { //在div="id1"区域点击
             var row = $(this).parent().index(); // 行位置
             var col = $(this).index(); // 列位置
-            if(clickFlag != 2){
-                clickFlag =1;
+            if (clickFlag != 2) {
+                clickFlag = 1;
             }
             switch (e.which) {
                 //左击
-                case 1: {
-                    check(row, col);
-                    break;
-                }
-                //右击
-                case 3: {
-                    var mineTable = document.getElementById('mine');  //table
-                    if (mines[row][col].checkFlag == 0) {
-                        mines[row][col].checkFlag = 2;
-                        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/flag1.png')";
-                        mineTable.rows[row].cells[col].style.backgroundSize = '20px 20px';
-                    } else if (mines[row][col].checkFlag == 2) {
-                        mines[row][col].checkFlag = 3;
-                        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/flag2.png')";
-                        mineTable.rows[row].cells[col].style.backgroundSize = '20px 20px';
-                    } else if (mines[row][col].checkFlag == 3) {
-                        mines[row][col].checkFlag = 0;
-                        mineTable.rows[row].cells[col].style.backgroundImage = "url('images/bg11.png')";
+                case 1:
+                    {
+                        check(row, col);
+                        break;
                     }
-                    break;
-                }
+                    //右击
+                case 3:
+                    {
+                        var mineTable = document.getElementById('mine'); //table
+                        if (mines[row][col].checkFlag == 0) {
+                            mines[row][col].checkFlag = 2;
+                            mineTable.rows[row].cells[col].style.backgroundImage = "url('images/flag1.png')";
+                            mineTable.rows[row].cells[col].style.backgroundSize = '20px 20px';
+                        } else if (mines[row][col].checkFlag == 2) {
+                            mines[row][col].checkFlag = 3;
+                            mineTable.rows[row].cells[col].style.backgroundImage = "url('images/flag2.png')";
+                            mineTable.rows[row].cells[col].style.backgroundSize = '20px 20px';
+                        } else if (mines[row][col].checkFlag == 3) {
+                            mines[row][col].checkFlag = 0;
+                            mineTable.rows[row].cells[col].style.backgroundImage = "url('images/bg11.png')";
+                        }
+                        break;
+                    }
             }
             checkWin(); //检测是否赢了
             // alert("当前位置：第" + row + "行，第" + col + "列" + e.which )
@@ -129,25 +148,33 @@ function check(r, c) {
         clickFlag = 2;
         gameFlag = 0;
         document.getElementById("faceBtn").style.backgroundImage = "url('images/badFace.png')";
-        mines[r][c].checkFlag = 1;
-        mineTable.rows[r].cells[c].style.backgroundImage = "url('images/redMine.png')";
-        mineTable.rows[r].cells[c].style.backgroundSize = '20px 20px';
+        
+        if(!mines[r][c].checkFlag){
+             mineTable.rows[r].cells[c].style.backgroundImage = "url('images/redMine.png')";
+             mineTable.rows[r].cells[c].style.backgroundSize = '20px 20px';
+             mines[r][c].checkFlag = 1;
+        }
+       
         //遍历显示未清除的块
         for (var i = 0; i < line; i++) {
             for (var j = 0; j < list; j++) {
                 if (mines[i][j].checkFlag != 1) {
-                    if (mines[i][j].checkFlag == 2 && !mines[i][j].ifMine){
+                    if (mines[i][j].checkFlag == 2 && !mines[i][j].ifMine) {
                         mineTable.rows[i].cells[j].style.backgroundImage = "url('images/miss.png')";
                         mineTable.rows[i].cells[j].style.backgroundSize = '20px 20px';
-                    }  if (mines[i][j].checkFlag == 3 && mines[i][j].ifMine) {
+                    }
+                    if (mines[i][j].checkFlag == 3 && mines[i][j].ifMine) {
                         mineTable.rows[i].cells[j].style.backgroundImage = "url('images/blackMine.png')";
                         mineTable.rows[i].cells[j].style.backgroundSize = '20px 20px';
-                    }  if (mines[i][j].ifMine) {
+                    }
+                    if (mines[i][j].ifMine) {
+                        mines[i][j].checkFlag = 1;
                         mineTable.rows[i].cells[j].style.backgroundImage = "url('images/blackMine.png')";
                         mineTable.rows[i].cells[j].style.backgroundSize = '20px 20px';
-                    }  if (mines[i][j].aroundMinesNum != 0) {
-                        printNum(i, j);
-                    } 
+                    }
+                    // if (mines[i][j].aroundMinesNum != 0) {
+                    //     printNum(i, j);
+                    // }
                     mines[i][j].checkFlag = 1;
                 }
             }
@@ -247,22 +274,26 @@ function creatTable() {
     mineBox.style.height = mineWidth * line + 10 + "px";
     document.getElementById('bgBox').style.width = mineWidth * list + 35 + "px";
     document.getElementById('bgBox').style.height = mineWidth * line + 110 + "px";
-    
+
+    document.getElementById('boderBox').style.width = mineWidth * list + 60 + "px";
+    document.getElementById('menuTwo').style.width = mineWidth * list + 35 + "px";
+    document.getElementById('boderBox').style.height = mineWidth * line + 190 + "px";
+
     document.getElementById('topBox').style.width = mineWidth * list + 10 + "px";
     document.getElementById('topBoxBg').style.width = mineWidth * list + 2 + "px";
     document.getElementById('faceBtn').style.marginLeft = mineWidth * list * 0.5 - 15 + "px";
-    
+
 }
 
 //产生雷,初始化数组信息
 function initMines() {
-    for (var i = 0; i < line; i++) {
-        mines[i] = new Array(list);
-        for (var j = 0; j < list; j++) {
+    for (var i = 0; i < 24; i++) {
+        mines[i] = new Array(30);
+        for (var j = 0; j < 30; j++) {
             mines[i][j] = {
-                ifMine: 0,     //0 表示此方块没雷 1表示有
-                aroundMinesNum: 0,  //值为周围8个方块雷数
-                checkFlag: 0   //0：未点击 1：点击清除 2：插旗 3：标记
+                ifMine: 0, //0 表示此方块没雷 1表示有
+                aroundMinesNum: 0, //值为周围8个方块雷数
+                checkFlag: 0 //0：未点击 1：点击清除 2：插旗 3：标记
             }
         }
     }
@@ -300,7 +331,7 @@ function creatPosition() {
             minePosition[i].y = tempPosition.y;
         }
     }
-    minePosition.sort(compare);//根据x,y坐标排序
+    minePosition.sort(compare); //根据x,y坐标排序
 }
 //排序比较参数
 var compare = function (obj1, obj2) {
@@ -358,4 +389,30 @@ function makeInfo() {
     }
 }
 
+//不同时显示
+var winMenuG = 0;
+var winMenuH = 0;
+//菜单按钮
+function menuGame(){
+    if(!winMenuG){
+        $("#winGame").show(10); 
+        winMenuG = 1;
+        $("#winHelp").hide(10); 
+        winMenuH = 0;
+    } else{
+        $("#winGame").hide(10); 
+        winMenuG = 0;
+    }  
+}
+function menuHelp(){
+        if(!winMenuH){
+            $("#winHelp").show(10); 
+            winMenuH = 1;
+            $("#winGame").hide(10); 
+        winMenuG = 0;
+        } else{
+            $("#winHelp").hide(10); 
+            winMenuH = 0;
+        } 
+}
 
