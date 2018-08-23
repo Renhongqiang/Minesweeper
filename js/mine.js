@@ -7,8 +7,8 @@ var minesNum = 10; //雷数
 // var minesNum = parseInt(list * line * 0.16); //雷数
 var mineWidth = 20; //方块大小
 var mineBox = document.getElementById('mineBox'); //table外div容器
-var minePosition = new Array(minesNum); //雷位置信息，坐标
-var mines = new Array(line); //二维数组，表示雷区地图信息
+// var minePosition = new Array(minesNum); //雷位置信息，坐标
+// var mines = new Array(line); //二维数组，表示雷区地图信息
 var gameFlag = 1; //1表示笑脸游戏进行 0表示哭脸游戏结束
 var clickFlag = 0; //0表示未点击 1表示点击 2表示暂停 用于控制计时器的开始结束
 var timeNum = 0; //时间 秒
@@ -113,6 +113,9 @@ function initGame() {
             // alert("当前位置：第" + row + "行，第" + col + "列" + e.which )
         });
     });
+  
+
+    
 }
 
 //检测赢
@@ -127,7 +130,7 @@ function checkWin() {
             }
         }
     }
-    console.log(n, minesNum);
+    // console.log(n, minesNum);
     if (n == minesNum) {
         // var r = confirm("你赢了！是否重新开始？");
         // console.log(r);
@@ -287,6 +290,7 @@ function creatTable() {
 
 //产生雷,初始化数组信息
 function initMines() {
+    mines = new Array(24); //全局变量雷信息
     for (var i = 0; i < 24; i++) {
         mines[i] = new Array(30);
         for (var j = 0; j < 30; j++) {
@@ -297,7 +301,7 @@ function initMines() {
             }
         }
     }
-
+    minePosition = new Array(minesNum); //定义全局变量
     creatPosition();
     for (var i = 0; i < minesNum; i++) {
         var x = minePosition[i].x;
@@ -305,6 +309,8 @@ function initMines() {
         // console.log(x,y);
         mines[x][y].ifMine = 1;
     }
+    // console.log(mines);
+    // console.log(minePosition);
 }
 //产生随机坐标
 function creatPosition() {
