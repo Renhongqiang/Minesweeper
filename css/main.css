@@ -112,6 +112,13 @@
     height: 25px;
     margin-left: -25px;
 }
+#winSpan {
+    display: none;
+    background-image: url("../images/spanBg.png");
+    background-size: 25px 25px;
+    position: absolute!important;
+    margin-top: -1px!important;
+}
 #winHelp {
     margin-left: 70px;
 }

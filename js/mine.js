@@ -12,6 +12,7 @@ var mineBox = document.getElementById('mineBox'); //table外div容器
 var gameFlag = 1; //1表示笑脸游戏进行 0表示哭脸游戏结束
 var clickFlag = 0; //0表示未点击 1表示点击 2表示暂停 用于控制计时器的开始结束
 var timeNum = 0; //时间 秒
+var ifFirst = 0; //第一次触雷标记
 
 //游戏难度
 function gameLevel(f){
@@ -32,6 +33,12 @@ function gameLevel(f){
     }
     gameStart();
 }
+//勾选对号显示控制
+$(".win_menu li").click(function () {
+    // $(this).find("span").eq(0).attr('id','winSpan');
+    // $(this).find("span").eq(0).removeAttr("id");
+    $(this).find("span").eq(0).toggle();
+});
 
 window.onload = function doThis() {
     initGame();
@@ -113,9 +120,6 @@ function initGame() {
             // alert("当前位置：第" + row + "行，第" + col + "列" + e.which )
         });
     });
-  
-
-    
 }
 
 //检测赢
@@ -146,6 +150,59 @@ function checkWin() {
 //递归检查周围八个方块
 function check(r, c) {
     var mineTable = document.getElementById('mine'); //table
+    //第一次踩雷
+    if (mines[r][c].ifMine && !ifFirst) {
+            if(!mines[r-1][c].ifMine){
+                mines[r-1][c].ifMine = 1;
+                mines[r][c].aroundMinesNum++;
+            }else{
+                mines[r][c].aroundMinesNum++;
+            }
+            if(!mines[r-1][c+1].ifMine){
+                mines[r-1][c+1].ifMine = 1;
+                mines[r][c].aroundMinesNum++;
+            }else{
+                mines[r][c].aroundMinesNum++;
+            }
+            if(!mines[r-1][c-1].ifMine){
+                mines[r-1][c-1].ifMine = 1;
+                mines[r][c].aroundMinesNum++;
+            }else{
+                mines[r][c].aroundMinesNum++;
+            }
+            if(!mines[r][c-1].ifMine){
+                mines[r][c-1].ifMine = 1;
+                mines[r][c].aroundMinesNum++;
+            }else{
+                mines[r][c].aroundMinesNum++;
+            }
+            if(!mines[r][c+1].ifMine){
+                mines[r][c+1].ifMine = 1;
+                mines[r][c].aroundMinesNum++;
+            }else{
+                mines[r][c].aroundMinesNum++;
+            }
+            if(!mines[r+1][c-1].ifMine){
+                mines[r+1][c-1].ifMine = 1;
+                mines[r][c].aroundMinesNum++;
+            }else{
+                mines[r][c].aroundMinesNum++;
+            }
+            if(!mines[r+1][c].ifMine){
+                mines[r+1][c].ifMine = 1;
+                mines[r][c].aroundMinesNum++;
+            }else{
+                mines[r][c].aroundMinesNum++;
+            }
+            if(!mines[r+1][c+1].ifMine){
+                mines[r+1][c+1].ifMine = 1;
+                mines[r][c].aroundMinesNum++;
+            }else{
+                mines[r][c].aroundMinesNum++;
+            }
+        mines[r][c].ifMine = 0;
+    }
+    ifFirst = 1;    
     //踩到雷 
     if (mines[r][c].ifMine) {
         clickFlag = 2;
@@ -290,6 +347,7 @@ function creatTable() {
 
 //产生雷,初始化数组信息
 function initMines() {
+    ifFirst = 0;
     mines = new Array(24); //全局变量雷信息
     for (var i = 0; i < 24; i++) {
         mines[i] = new Array(30);

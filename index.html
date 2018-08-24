@@ -16,7 +16,7 @@
     <div class="container" onselectstart="return false">
         <div id="boderBox"> 
             <img src="./images/mine.ico" style="height: 22px;margin: 4px 4px;" alt="">    
-            <span>扫雷</span> 
+            <span id="topSpan">扫雷</span> 
             <ul id="imgIcon">
                 <li id="winMin"></li>
                 <li id="winMax"></li>
@@ -25,14 +25,14 @@
             <div id="menuTwo">
                 <span id="spG" onclick="menuGame()">游戏(G)</span>
                 <ul class="win_menu" id="winGame">
-                    <li style="border-bottom: #DADADA 1px solid;"> <span></span>  开局(N)</li>
-                    <li onclick="gameLevel(1)"> <span></span>  初级(B)</li>
-                    <li onclick="gameLevel(2)"> <span></span>  中级(I)</li>
-                    <li onclick="gameLevel(3)"> <span></span>  高级(E)</li>
-                    <li style="border-bottom: #DADADA 1px solid;"> <span></span>  自定义(C)...</li>
-                    <li> <span></span>  标记(?)(M)</li>
-                    <li> <span></span>  颜色(L)</li>
-                    <li style="border-bottom: #DADADA 1px solid;"> <span></span>  声音(S)...</li>
+                    <li style="border-bottom: #DADADA 1px solid;" onclick="gameStart()"> <span></span>  开局(N)</li>
+                    <li onclick="gameLevel(1)"> <span id="winSpan"></span>  初级(B)</li>
+                    <li onclick="gameLevel(2)"> <span id="winSpan"></span>  中级(I)</li>
+                    <li onclick="gameLevel(3)"> <span id="winSpan"></span>  高级(E)</li>
+                    <li style="border-bottom: #DADADA 1px solid;"> <span id="winSpan"></span>  自定义(C)...</li>
+                    <li> <span id="winSpan"></span>  标记(?)(M)</li>
+                    <li> <span id="winSpan"></span>  颜色(L)</li>
+                    <li style="border-bottom: #DADADA 1px solid;"> <span id="winSpan"></span>  声音(S)...</li>
                     <li style="border-bottom: #DADADA 1px solid;"> <span></span>  退出(X)...</li>
                 </ul>
                 <span id="spH" onclick="menuHelp()">帮助(H)</span>
